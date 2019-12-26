@@ -1,0 +1,47 @@
+.TH rconf 5
+
+.SH NAME
+rconf, a simple and minimal configuration format
+
+.SH DESCRIPTION
+
+The rconf specification and implementation is intentionally simple.
+
+rconf expects a plain ASCII text file, that has either a valid "config" line,
+a comment, an invalid line or whitespace. The config file is read line
+by line.
+
+.SS Config Lines
+
+A valid config line will be translated into a key-value pair. It must not
+begin with any whitespace or a `#` character and it must contain at least
+one `=` character, the first of which will separate the key from the value.
+
+Here are some examples:
+
+key=value
+.br
+key = value
+.br
+another key with spaces =some value
+
+The separating `=` character can contain a single space character on
+either side but any additional whitespace will be included as either
+a part of the key or value or both.
+
+Keys and values are both limited to a maximum number of 1024 characters.
+
+.SS Comments
+
+Comments are any lines that begin with a `#` character. They are read and
+ignored. Multiline comments are just multiple lines that all being with the
+`#` character. Therefore you cannot include a comment at the end of any other
+kind of line.
+
+.SS Invalid Lines
+
+Invalid lines are any lines that do not meet any of the above criteria, they
+are silently ignored.
+
+.SH COPYRIGHT
+Copyright \(co 2019 Rory Bradford <roryrjb@gmail.com>.

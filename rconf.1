@@ -1,0 +1,26 @@
+.TH rconf 1
+
+.SH NAME
+rconf \- A reader for rconf files
+
+.SH SYNOPSIS
+.B rconf
+[-h] [-k key] filename
+
+.SH DESCRIPTION
+.B rconf
+will parse and print out values from rconf files.
+
+Filename should either reference a file or be '-' for stdin.
+
+.SH OPTIONS
+.TP
+.B "\-h"
+Show usage information.
+
+.TP
+.B "\-k key"
+Print out the value of the matching key, if any.
+
+.SH COPYRIGHT
+Copyright \(co 2019 Rory Bradford <roryrjb@gmail.com>.
