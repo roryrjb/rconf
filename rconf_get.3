@@ -1,0 +1,17 @@
+.TH rconf_get 3
+
+.SH NAME
+rconf_get \- Parse rconf files
+
+.SH "SYNOPSIS"
+\fB#include <rconf.h>\fR
+.sp
+\fB#define RCONF_STRING_LIMIT 1024\fR
+.sp
+\fBextern char rconf_key[RCONF_STRING_LIMIT];\fR
+.br
+\fBextern char rconf_value[RCONF_STRING_LIMIT];\fR
+.sp
+\fBint rconf_get(size_t *len, FILE *fp);\fR
+
+.SH DESCRIPTION

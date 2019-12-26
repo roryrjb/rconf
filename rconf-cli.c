@@ -27,7 +27,7 @@ extern char *__progname;
 
 void usage(void)
 {
-	fprintf(stderr, "Usage: %s [-k key]\n", __progname);
+	fprintf(stderr, "Usage: %s [-h] [-k key] filename\n", __progname);
 }
 
 int main(int argc, char **argv)
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 	size_t len = 0;
 	int rconf = 0;
 
-	while ((opt = getopt(argc, argv, "k:v")) != -1) {
+	while ((opt = getopt(argc, argv, "k:h")) != -1) {
 		switch (opt) {
 		case 'k':
 			key = optarg;
@@ -54,20 +54,27 @@ int main(int argc, char **argv)
 	if (optind < argc) {
 		filename = argv[optind];
 	} else {
-		fprintf(stderr, "Error: no file specified.\n");
+		fprintf(stderr, "Error: no filename specified.\n");
 		usage();
 		exit(EXIT_FAILURE);
 	}
 
-	fp = fopen(filename, "r");
+	if (strcmp("-", filename) == 0) {
+		fp = stdin;
+	} else {
+		fp = fopen(filename, "r");
+	}
 
-	if (fp == NULL)
+	if (fp == NULL) {
+		fprintf(stderr, "Error: no valid file specified.\n");
+		usage();
 		exit(EXIT_FAILURE);
+	}
 
 	while ((rconf = rconf_get(&len, fp)) != -1) {
 		if (key != NULL) {
 			if (strlen(rconf_key) && strlen(rconf_value) &&
-			    strcmp(key, rconf_key) == 0) {
+				strcmp(key, rconf_key) == 0) {
 				printf("%s\n", rconf_value);
 			}
 		} else {
@@ -79,7 +86,9 @@ int main(int argc, char **argv)
 		}
 	}
 
-	fclose(fp);
+	if (fp != NULL) {
+		fclose(fp);
+	}
 
 	exit(EXIT_SUCCESS);
 }
